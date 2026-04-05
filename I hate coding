@@ -110,3 +110,45 @@ while choice != "4":
  
     else:
         print("Invalid choice. Please try again.")
+
+
+
+
+
+
+# PA 4 Design Document - IPO Chart
+# Alabama Elephants NBA Player Stats Application
+ 
+# Extras:
+# You can Sort players by stats and can search by team names 
+ 
+# INPUT - PROCESSING - OUTPUT (IPO) CHART
+
+ 
+# INPUT:
+# - nba_data_2.csv file containing NBA player statistics
+# - User menu selection (1, 2, 3, or 4)
+ 
+# PROCESSING:
+# 1. Read the CSV file and parse the header to find column indexes
+# 2. Store relevant columns (Player, Tm, G, PTS, TRB, AST) into lists
+# 3. Display menu and get user choice
+# 4. Option 1 - Most Total Points:
+#    - For each player, calculate total points = G * PTS
+#    - Track the player with the highest total
+# 5. Option 2 - Highest PRA:
+#    - For each player, calculate PRA = PTS + TRB + AST
+#    - Track the player with the highest PRA
+# 6. Option 3 - Team Combos > 50 avg points:
+#    - Find all unique teams
+#    - For each team, get all players on that team
+#    - Check every pair of players on the same team
+#    - If their combined average points per game > 50, display them
+# 7. Option 4 - Exit the program
+# 8. Repeat menu until user selects Exit
+ 
+# OUTPUT:
+# - Option 1: Player name and their total points
+# - Option 2: Player name and their PRA value
+# - Option 3: List of player pairs on the same team with combined avg ppg > 50
+# - Option 4: Goodbye message
