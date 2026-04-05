@@ -1,0 +1,112 @@
+
+file = open("nba_data_2.csv", "r")
+lines = file.readlines()
+file.close()
+ 
+
+header = lines[0].strip().split(",")
+player_index = header.index("Player")
+team_index = header.index("Tm")
+games_index = header.index("G")
+pts_index = header.index("PTS")
+trb_index = header.index("TRB")
+ast_index = header.index("AST")
+ 
+
+players = []
+teams = []
+games = []
+pts = []
+trb = []
+ast = []
+ 
+
+for i in range(1, len(lines)):
+    line = lines[i].strip()
+    if line == "":
+        continue
+    data = line.split(",")
+    players.append(data[player_index])
+    teams.append(data[team_index])
+    games.append(int(data[games_index]))
+    pts.append(float(data[pts_index]))
+    trb.append(float(data[trb_index]))
+    ast.append(float(data[ast_index]))
+ 
+
+choice = ""
+while choice != "4":
+    print()
+    print("Alabama Elephants Player Analysis")
+    print("==================================")
+    print("1. Player with the most total points")
+    print("2. Player with the highest PRA")
+    print("3. Team player combos with combined avg points > 50")
+    print("4. Exit")
+    print()
+    choice = input("Enter your choice: ")
+ 
+    if choice == "1":
+        # total points = games played * average points per game
+        max_total = 0
+        max_player = ""
+        for i in range(len(players)):
+            total = games[i] * pts[i]
+            if total > max_total:
+                max_total = total
+                max_player = players[i]
+        print()
+        print("Player with the most total points:")
+        print(max_player + " with " + str(round(max_total, 2)) + " total points")
+ 
+    elif choice == "2":
+        # PRA = average points + average rebounds + average assists
+        max_pra = 0
+        max_player = ""
+        for i in range(len(players)):
+            pra = pts[i] + trb[i] + ast[i]
+            if pra > max_pra:
+                max_pra = pra
+                max_player = players[i]
+        print()
+        print("Player with the highest PRA:")
+        print(max_player + " with a PRA of " + str(round(max_pra, 2)))
+ 
+    elif choice == "3":
+        # find all unique teams
+        unique_teams = []
+        for i in range(len(teams)):
+            if teams[i] not in unique_teams:
+                unique_teams.append(teams[i])
+ 
+        print()
+        print("Player combos on the same team with combined avg points > 50:")
+        print()
+ 
+   
+        found = False
+        for team in unique_teams:
+            # get indexes of players on this team
+            team_players = []
+            for i in range(len(players)):
+                if teams[i] == team:
+                    team_players.append(i)
+ 
+           
+            for i in range(len(team_players)):
+                for j in range(i + 1, len(team_players)):
+                    p1 = team_players[i]
+                    p2 = team_players[j]
+                    combined = pts[p1] + pts[p2]
+                    if combined > 50:
+                        print(team + ": " + players[p1] + " (" + str(pts[p1]) + " ppg) & " + players[p2] + " (" + str(pts[p2]) + " ppg) = " + str(round(combined, 2)) + " combined avg ppg")
+                        found = True
+ 
+        if not found:
+            print("No player combinations found with combined avg points > 50.")
+ 
+    elif choice == "4":
+        print("Goodbye!")
+ 
+    else:
+        print("Invalid choice. Please try again.")
