@@ -1,4 +1,3 @@
-
 file = open("nba_data_2.csv", "r")
 lines = file.readlines()
 file.close()
